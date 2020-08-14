@@ -5,6 +5,8 @@ import nunjucks from "nunjucks";
 const app = express();
 const port = process.env['PORT'] || 3000;
 
+app.use("/static", express.static('public'));
+
 const PATH_TO_TEMPLATES = "./src/templates/";
 nunjucks.configure(PATH_TO_TEMPLATES, { 
     autoescape: true,
