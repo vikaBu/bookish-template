@@ -2,16 +2,22 @@
   "name": "bookish",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src/app.ts",
   "dependencies": {
     "@babel/core": "7.11.1",
     "@babel/node": "7.10.5",
     "@babel/preset-env": "7.11.0",
+    "@types/node": "14.0.27",
     "dotenv": "8.2.0",
-    "nodemon": "2.0.4"
+    "eslint": "7.6.0",
+    "eslint-plugin-import": "2.22.0",
+    "nodemon": "2.0.4",
+    "ts-node": "8.10.2",
+    "typescript": "3.9.7"
   },
   "scripts": {
-    "start": "nodemon --exec babel-node src/app.js",
+    "start": "babel-node -r ts-node/register ./src/app.ts",
+    "dev": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
