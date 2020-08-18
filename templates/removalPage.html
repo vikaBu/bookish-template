@@ -1,0 +1,10 @@
+{% extends "_base.html" %}
+    {% block content %}
+    <ul>
+        <form method = "post" action = "/books/remove">
+            <label for="id">Book ID</label>
+            <input id="id" type = "text" name = "id"/>
+            <button type="delete">Delete</button>
+        </form>
+    </ul>
+{% endblock %}
