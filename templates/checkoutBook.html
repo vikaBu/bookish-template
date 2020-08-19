@@ -1,0 +1,52 @@
+{% extends "_base.html" %}
+{% block content %}
+<h1>Check out History</h1>
+<span>
+    <form method="post" action="/books/checkout-book">
+        <label for="user_id">Enter User Id</label>
+        <input id="user_id" type="number" name="user_id" />
+        <label for="copy_id">Enter Book Id</label>
+        <input id="copy_id" type="number" name="copy_id" />
+        <button type="checkout">Check Out</button>
+        </ul>
+</span>
+<br>
+<span>
+    <h2>insert user ID and book ID to proceed with checkout</h2>
+</span>
+<img style="float:right"
+    src="https://imgix.bustle.com/rehost/2017/11/15/065e0a33-d303-44cd-b3e2-1511de2f27ca.jpg?w=800&auto=format%2Ccompress&cs=srgb&q=70&fit=crop&crop=faces" />
+<span>
+    <ul>
+        <span>
+            <span>
+                <table>
+                    <tr>
+                        <th>Id</th>
+                        <th>User Id</th>
+                        <th>copy id</th>
+                        <th>Return date</th>
+                        <th>Checked in date</th>
+                        <th>checked out date</th>
+                    </tr>
+
+                    {% for checkout in check_out_history %}
+
+                    <td>{{checkout.id}}</td>
+                    <td>{{checkout.user_id}}</td>
+                    <td>{{checkout.copy_id}}</td>
+                    <td>{{checkout.return_date | formatDate}}</td>
+                    <td>{{checkout.checked_in_date}}</td>
+                    <td>{{checkout.checked_out_date | formatDate}}</td>
+
+                    </tr>
+            </span>
+        </span>
+    </ul>
+    {% endfor %}
+    </table>
+    </ul>
+</span>
+
+
+{% endblock %}

@@ -1,5 +1,6 @@
 import Knex from "knex";
 import { title } from "process";
+import moment from "moment" 
 
 
 // create new client {configuration}\dt
@@ -69,3 +70,18 @@ export const editBook = (book : editBook) => {
     .update({title: book.newtitle})
 }
 
+export const userCheckOutBook = (user_id: number, copy_id: number) => {
+    return client('check_out_history')
+    .insert({
+        user_id: user_id,
+        copy_id: copy_id,
+        checked_out_date: client.fn.now(),
+        return_date: client.raw("now() + interval '7 days'")
+
+    })
+}
+export const CheckoutHistory = () => { 
+    return client('check_out_history')
+    .select()
+}
+     

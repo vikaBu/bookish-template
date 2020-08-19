@@ -10,8 +10,9 @@ import {new_book} from "./querySelector"
 import {book_removal} from "./querySelector"
 import {delete_book} from "./querySelector"
 import {copies_available} from "./querySelector"
-
-
+import {userCheckOutBook} from "./querySelector"
+import {CheckoutHistory} from "./querySelector"
+import moment from "moment" 
 
 
 const app = express();
@@ -33,10 +34,13 @@ app.use(
 );
 
 const PATH_TO_TEMPLATES = "./templates/";
-nunjucks.configure(PATH_TO_TEMPLATES, { 
+const env = nunjucks.configure(PATH_TO_TEMPLATES, { 
     autoescape: true,
     express: app
 });
+env.addFilter("formatDate", (sqlDate : string)=>{
+    return moment(sqlDate).format("Do MMM YYYY")
+})
 
 app.get("/", (req, res) => {
     const model = {
@@ -107,6 +111,34 @@ app.post("/books/edit-book", async(request,response)=>{
     response.send('book updated')
 })
 
+// app.get("/books/checkout-book", async (request,response)=>{
+//     return(
+//         response.render('checkoutBook.html')
+//     )
+// })
+
+app.post("/books/checkout-book", async (request, response)=>{
+    const bookCheckedout= request.body.user_id;
+    const bookidCheckout= request.body.book_id;
+    await userCheckOutBook(bookCheckedout, bookidCheckout);
+    response.send('Book checked out')
+})
+
+app.get("/books/checkout-book", async (request, response)=>{
+    const chekoutThing = await CheckoutHistory()
+    const moda = {
+        check_out_history : chekoutThing
+    }
+    return(
+        response.render('checkoutBook.html', moda)
+    )
+})
+
+// app.post("/books/checkout-book", async(request, response)=>{
+//     const checkoutthing = request.body
+//     await CheckoutHistory()
+//     response.render("complete")
+//})
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`)
