@@ -1,6 +1,12 @@
 {% extends "_base.html" %}
     {% block content %}
+    <h1>Remove Book from database</h1>
+    <span>
+    <img src ="https://missile.digital/public/uploads/bookburning.jpg"/>
+    </span>
+    <h2>please take caution, deletion is irreversible</h2>
     <ul>
+        <br>
         <form method = "post" action = "/books/remove">
             <label for="id">Book ID</label>
             <input id="id" type = "text" name = "id"/>

@@ -1,0 +1,13 @@
+{% extends "_base.html" %}
+{% block content %}
+<h1>Edit book entry</h1>
+    <ul>
+    <form method = "post" action = "/books/edit-book">
+        <label for="id">Enter Book Id</label>
+        <input id="id" type = "text" name = "id"/>
+        <label for="newtitle"> New Title<label>
+        <input id="newtitle"type ="text" name ="newtitle"/>
+        <button type="update">Update</button>
+    </ul>
+    <img src ="https://data.whicdn.com/images/304706242/original.jpg" style="float:left" height = 700px/>
+{% endblock %}

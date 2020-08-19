@@ -2,13 +2,15 @@
 import express, { response } from "express";
 import nunjucks from "nunjucks";
 import sassMiddleware from "node-sass-middleware";
-import {book_name} from "./querySelector"
+import {book_name, editBook} from "./querySelector"
 import { title } from "process";
 import {book_list} from "./querySelector"
 import { request } from "http";
 import {new_book} from "./querySelector"
 import {book_removal} from "./querySelector"
 import {delete_book} from "./querySelector"
+import {copies_available} from "./querySelector"
+
 
 
 
@@ -81,7 +83,29 @@ app.post("/books/remove", async (request, response) =>{
     response.send('book removed');
 })
 
+app.get("/books/copies", async(request, response) =>{
+    const copiesThing = await copies_available()
+    const maneken = {
+           copies_of_books : copiesThing
+    }
+    response.render('bookCopies.html', maneken)
+})
 
+app.get("/books/edit-book", async(request, response)=>{
+    return(
+        response.render('editbook.html')
+    )
+})
+
+app.post("/books/edit-book", async(request,response)=>{
+    // const bookname = [];
+    // bookname.book(
+    //     {newtitle: book.title}
+    // )
+    const changeBook = request.body;
+    const sqlResult = await editBook(changeBook)
+    response.send('book updated')
+})
 
 
 app.listen(port, () => {

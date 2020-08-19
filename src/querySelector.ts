@@ -53,6 +53,19 @@ export const delete_book = (id : number) =>{
     .where ('book_id', id)
 }
 
-export const update_book = (book: Book) => {
-
+export const copies_available = () => {
+    return client('copies_of_books')
+        .select() 
+    
 }
+interface editBook{
+    id: number;
+    newtitle: string;
+}
+
+export const editBook = (book : editBook) => {
+    return client('books')
+    .where('id', book.id)
+    .update({title: book.newtitle})
+}
+

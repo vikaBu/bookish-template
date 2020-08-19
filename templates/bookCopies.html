@@ -1,0 +1,24 @@
+{% extends "_base.html" %}
+    {% block content %}
+    <h1>Copies of books available by ID</h1>
+    <img src="https://www.washingtonpost.com/rf/image_1484w/2010-2019/WashingtonPost/2015/08/04/LocalLiving/Images/WEBrainbow.jpg?t=20170517" style="float:right" height = 800px/>
+    <ul>
+            <span>
+              <span>
+                <table>
+                  <tr>
+                    <th>Copy ID</th>
+                    <th>Book ID</th>
+                  </tr>
+    {% for copy in copies_of_books %}
+
+            <td>{{copy.id}}</td>
+            <td>{{copy.book_id}}</td>
+            </tr>
+          </span>
+        </span>
+      </ul>
+      {% endfor %}
+      </table>
+</ul>
+{% endblock %}
