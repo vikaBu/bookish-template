@@ -1,7 +1,6 @@
 {% extends "_base.html" %}
     {% block content %}
     <h1>Create new book entry</h1>
-    <img src="https://www.travelcaffeine.com/wp-content/uploads/2017/07/last-bookstore-tunnel-downtown-los-angeles-california-876.jpg" height=600px/>
     <span>
         <h2>Enter the information below</h2>
     <ul>
@@ -9,19 +8,23 @@
            
             <label for="author">Author</label>
             <input id="author" type = "text" name = "author"/>
+            <span>
 
-             <label for="title">Title</label>
+             <label for="title">  Title</label>
             <input id="title" type = "text" name = "title"/>
-
+            <span>
             <label for="title">Genre</label>
             <input id="genre" type = "text" name = "genre"/>
-            
+            <span>
             <label for="release">Release</label>
             <input id="release" type = "number" name = "release"/>
-
+            <span>
 
             <button type="submit">Submit!</button>
         </form>
+        <span>
+            <img src="https://www.travelcaffeine.com/wp-content/uploads/2017/07/last-bookstore-tunnel-downtown-los-angeles-california-876.jpg" height=600px/>
+        </span>
     </ul>
 </span>
 {% endblock %}

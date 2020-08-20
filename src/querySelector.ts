@@ -24,8 +24,7 @@ export const book_name = ( title: string) => {
 
 export const book_list = () => {
     return client('books')
-        .select()
-        
+        .select() 
 };
 
 interface Book {
@@ -36,8 +35,7 @@ interface Book {
 }
 
 export const new_book = (book : Book ) => {
-    return client.insert({title: book.title , author: book.author, genre: book.genre, release: book.release }).into("books")
-    
+    return client.insert({title: book.title , author: book.author, genre: book.genre, release: book.release }).into("books")  
 }
 
 export const book_removal = (id : number) => {
@@ -56,18 +54,21 @@ export const delete_book = (id : number) =>{
 
 export const copies_available = () => {
     return client('copies_of_books')
-        .select() 
+        .select('copies_of_books.id', 'copies_of_books.book_id', 'books.title' ) 
+        .join('books', 'copies_of_books.book_id', 'books.id')
     
 }
 interface editBook{
     id: number;
     newtitle: string;
+    newauthor: string;
+    newgenre: string;
+    newrelease : number;
 }
-
 export const editBook = (book : editBook) => {
     return client('books')
     .where('id', book.id)
-    .update({title: book.newtitle})
+    .update({title: book.newtitle, author: book.newauthor, genre: book.newgenre, release: book.newrelease})
 }
 
 export const userCheckOutBook = (user_id: number, copy_id: number) => {
@@ -84,4 +85,32 @@ export const CheckoutHistory = () => {
     return client('check_out_history')
     .select()
 }
-     
+
+export const CheckInHistory = () => { 
+    return client('check_out_history')
+    .select()
+}
+export const CheckedIn = (user_id : number, copy_id: number ) => { 
+    return client('check_out_history')
+    .select()
+    .insert({
+        user_id: user_id,
+        copy_id : copy_id,
+        checked_in_date: client.fn.now(),
+    })
+}
+
+export const UsersDisplay = () => {
+    return client ('library_user')
+    .select()
+}
+
+export const createNewUser = (user_name: string, phone_number: number, email: string, address:string) => {
+    return client('library_user')
+    .insert({
+        user_name: user_name,
+        phone_number: phone_number,
+        email : email,
+        address: address,
+    })
+}

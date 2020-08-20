@@ -9,11 +9,13 @@
                   <tr>
                     <th>Copy ID</th>
                     <th>Book ID</th>
+                    <th>Book Title</th>
                   </tr>
     {% for copy in copies_of_books %}
 
             <td>{{copy.id}}</td>
             <td>{{copy.book_id}}</td>
+             <td>{{copy.title}}</td>
             </tr>
           </span>
         </span>

@@ -1,0 +1,18 @@
+{% extends "_base.html" %}
+    {% block content %}
+    <h1>Return a book</h1>
+    <span>
+    </span>
+    <h2>please take the book id you would like to return</h2>
+    <ul>
+        <img src ="https://virginmoneygiving.files.wordpress.com/2012/05/stickman-books.jpg" style="float:centre"/>
+        <br>
+        <form method = "post" action = "/books/checkin-book">
+            <label for="user_id">Enter Your user ID</label>
+            <input id="user_id" type = "text" name = "user_id"/>
+            <label for="copy_id">Book Id</label>
+                <input id="copy_id" type = "text" name = "copy_id"/>
+            <button type="return">Return</button>
+        </form>
+    </ul>
+{% endblock %}

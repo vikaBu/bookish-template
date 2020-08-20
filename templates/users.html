@@ -1,0 +1,34 @@
+{% extends "_base.html" %}
+    {% block content %}
+    <h1>Users List</h1>
+    <ul>
+            <span>
+              <span>
+                <table>
+                  <tr>
+                    <th>ID</th>
+                    <th>User Name</th>
+                    <th>Phone number</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                  </tr>
+
+    {% for user in library_user %}
+
+            <td>{{user.id}}</td>
+            <td>{{user.user_name}}</td>
+            <td>{{user.phone_number}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.address}}</td>
+            </tr>
+          </span>
+        </span>
+      </ul>
+      {% endfor %}
+      </table>
+</ul>
+
+<a href = '/users/newuser' >New User</a>
+
+</script>
+{% endblock %}

@@ -2,7 +2,7 @@
 import express, { response } from "express";
 import nunjucks from "nunjucks";
 import sassMiddleware from "node-sass-middleware";
-import {book_name, editBook} from "./querySelector"
+import {book_name, editBook, CheckInHistory, createNewUser} from "./querySelector"
 import { title } from "process";
 import {book_list} from "./querySelector"
 import { request } from "http";
@@ -13,6 +13,8 @@ import {copies_available} from "./querySelector"
 import {userCheckOutBook} from "./querySelector"
 import {CheckoutHistory} from "./querySelector"
 import moment from "moment" 
+import {UsersDisplay} from "./querySelector"
+import {CheckedIn} from "./querySelector"
 
 
 const app = express();
@@ -66,7 +68,7 @@ app.get("/books/addbook", (request, response) => {
 app.post("/books/addbook", async (request, response) =>{
     const book = request.body;
     await new_book(book);
-    response.send("Success! check out your new entry in : 'http://localhost:3000/book_list' ")
+    response.redirect("/book_list")
 })
 
 app.get("/book/:name", async (request, response) => {
@@ -84,7 +86,7 @@ app.post("/books/remove", async (request, response) =>{
     await delete_book(removal.id);
     await book_removal(removal.id);
     
-    response.send('book removed');
+    response.redirect('/book_list');
 })
 
 app.get("/books/copies", async(request, response) =>{
@@ -100,28 +102,18 @@ app.get("/books/edit-book", async(request, response)=>{
         response.render('editbook.html')
     )
 })
-
 app.post("/books/edit-book", async(request,response)=>{
-    // const bookname = [];
-    // bookname.book(
-    //     {newtitle: book.title}
-    // )
     const changeBook = request.body;
-    const sqlResult = await editBook(changeBook)
-    response.send('book updated')
+    await editBook(changeBook)
+    response.redirect('/book_list')
 })
 
-// app.get("/books/checkout-book", async (request,response)=>{
-//     return(
-//         response.render('checkoutBook.html')
-//     )
-// })
 
 app.post("/books/checkout-book", async (request, response)=>{
-    const bookCheckedout= request.body.user_id;
-    const bookidCheckout= request.body.book_id;
-    await userCheckOutBook(bookCheckedout, bookidCheckout);
-    response.send('Book checked out')
+    const userID= request.body.user_id;
+    const copyID= request.body.copy_id;
+    await userCheckOutBook(userID, copyID);
+    response.redirect('/books/checkout-book')
 })
 
 app.get("/books/checkout-book", async (request, response)=>{
@@ -134,11 +126,49 @@ app.get("/books/checkout-book", async (request, response)=>{
     )
 })
 
-// app.post("/books/checkout-book", async(request, response)=>{
-//     const checkoutthing = request.body
-//     await CheckoutHistory()
-//     response.render("complete")
-//})
+app.get("/users", async (request, response) => {
+    const userThing = await UsersDisplay()
+    const modelis = {
+        library_user : userThing
+    }
+    return(
+        response.render('users.html', modelis)
+    )
+})
+
+app.get("/users/newuser", async(request, response)=>{
+    return(
+        response.render('newUser.html')
+    )
+})
+
+app.post("users/newuser", async(request, response)=>{
+    const user_name= request.body.user_name;
+    const phone_number= request.body.phone_number;
+    const email = request.body.email;
+    const address = request.body.address
+    await createNewUser(user_name,phone_number,email,address);
+    response.send('new user created')
+
+})
+
+
+app.get("/books/checkin-book", async (request, response)=>{
+    const chekoutThing = await CheckInHistory()
+    const moda = {
+        check_out_history : chekoutThing
+    }
+    return(
+        response.render('checkinpage.html', moda)
+    )
+})
+
+app.post("/books/checkin-book", async (request, response)=>{
+    const userID= request.body.user_id;
+    const copyID= request.body.copy_id;
+    await CheckedIn(userID, copyID);
+    response.redirect('/books/checkout-book')
+})
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`)

@@ -1,0 +1,21 @@
+{% extends "_base.html" %}
+    {% block content %}
+    <h1>New User</h1>
+    <ul>
+    <form method = "post" action = "/books/edit-book">
+
+        <label for="user_name">Enter Username</label>
+        <input id="user_name" type = "text" name = "user_name"/>
+
+        <label for="phone_number"> Enter Phone Number<label>
+        <input id="phone_number"type ="text" name ="phone_number"/>
+
+        <label for="email"> Enter Email<label>
+        <input id="email"type ="text" name ="email"/>
+
+        <label for="address"> Enter an Address<label>
+        <input id="address"type ="text" name ="address"/>
+
+        <button type="submit">Create</button>
+    </ul>
+    {% endblock %}

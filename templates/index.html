@@ -1,9 +1,61 @@
 ﻿﻿{% extends "_base.html" %}
 {% block content %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<div class="container"></div>
 <h1 class="centered">BOOKISH app</h1>
+<a href="/book_list" class="myButton">Get Started</a>
+
+
 <link href="/site.css" rel="stylesheet" type="text/css">
-<div>
-    <img src ="https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80" style="float:centered"/>
-</div>
+
+<style>
+    body,
+    html {
+        height: 100%;
+        margin: 0;
+    }
+
+    .bg {
+        background-image: url("https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80");
+
+        height: 100%;
+
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .myButton {
+        box-shadow: inset 0px 0px 0px 0px #efdcfb;
+        background: linear-gradient(to bottom, #2b7f94 5%, #7fd0e8 100%);
+        background-color: #2b7f94;
+        border-radius: 14px;
+        border: 3px solid #14a5c9;
+        display: inline-block;
+        cursor: pointer;
+        color: #ffffff;
+        font-family: Arial;
+        font-size: 15px;
+        font-weight: bold;
+        padding: 15px 71px;
+        text-decoration: none;
+        text-shadow: 0px 1px 24px #14457a;
+        height: 20px;
+        position: relative;
+        margin: -20px -50px;
+        width: 100px;
+        top: 650px;
+        left: 40%;
+        z-index: 10;
+    }
+
+    .myButton:hover {
+        background: linear-gradient(to bottom, #7fd0e8 5%, #2b7f94 100%);
+        background-color: #7fd0e8;
+    }
+
+</style>
+
+<div class="bg"></div>
 
 {% endblock %}
