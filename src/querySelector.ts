@@ -1,11 +1,13 @@
 import Knex from "knex";
 import { title } from "process";
 import moment from "moment" 
-
+import sha256 from 'crypto-js/sha256';
+import hmacSHA512 from 'crypto-js/hmac-sha512';
+import Base64 from 'crypto-js/enc-base64';
 
 // create new client {configuration}\dt
 
-const client = Knex({
+export const client = Knex({
     client: 'pg',
     connection: {
         user: "postgres",
@@ -14,6 +16,17 @@ const client = Knex({
         password: process.env.POSTGRES_PASSWORD,
     }
 });
+
+// let hashedValue = crypto
+//     .createHash('sha256')
+//     .update(theThingYouWantToHash)
+//     .digest('base64');
+
+
+export const registerUser = ( ) => {
+    return client('library_user')
+
+}
 
 
 export const book_name = ( title: string) => {
@@ -103,6 +116,14 @@ export const CheckedIn = (user_id : number, copy_id: number ) => {
 export const UsersDisplay = () => {
     return client ('library_user')
     .select()
+    
+}
+
+export const fetchUser = (username : string) => {
+    return client ('library_user')
+    .select()
+    .where ('user_name', username)
+    
 }
 
 export const createNewUser = (user_name: string, phone_number: number, email: string, address:string) => {
@@ -114,3 +135,4 @@ export const createNewUser = (user_name: string, phone_number: number, email: st
         address: address,
     })
 }
+
