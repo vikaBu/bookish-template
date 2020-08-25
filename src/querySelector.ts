@@ -126,6 +126,12 @@ export const fetchUser = (username : string) => {
     
 }
 
+export const fetchUserById = (id : number) => {
+    return client ('library_user')
+    .select()
+    .where ('id', id)
+  
+}
 export const createNewUser = (user_name: string, phone_number: number, email: string, address:string) => {
     return client('library_user')
     .insert({

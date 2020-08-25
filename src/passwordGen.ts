@@ -21,7 +21,7 @@ export const addNewUser = (newUser: any) => {
     const hashedValue = passwordFunction( newUser.password, salt);
 
     return client('library_user')
-        .insert({ user_name: newUser.user_name, phone_number: newUser.phone_number, email: newUser.email, address: newUser.address, saltpassword: salt, hpassword: hashedValue })
+        .insert({ user_name: newUser.user_name, phone_number: newUser.phone_number, email: newUser.email, address: newUser.address, saltpassword: salt, hpassword: hashedValue, user_role: 'user' })
 
 }
 
@@ -60,4 +60,5 @@ export const matchHash = async (username: string, password: string) => {
     else {
         return false;
     }
+
 }

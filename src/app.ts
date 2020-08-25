@@ -19,6 +19,8 @@ import { addNewUser, matchHash } from "./passwordGen";
 import Passport from "passport";
 import passportlocal from "passport-local"
 import passport from "passport";
+import cookieparser from "cookie-parser";
+import expresssession from "express-session";
 
 const app = express();
 const port = process.env['PORT'] || 3000;
@@ -37,8 +39,23 @@ app.use(
     }),
     express.static('public')
 );
+app.use(cookieparser());
+app.use(expresssession({
+    secret: "secret"
+}));
+
+
+passport.serializeUser(function(user, done) {
+    done(null, user);
+  });
+  
+  passport.deserializeUser(function(user, done) {
+    done(null, user);
+  });
+// replace passportlocal with jwt (for stateless token) yet to be added JWTStrategy
 const LocalStrategy = passportlocal.Strategy;
-app.use(passport.initialize())
+app.use(passport.initialize());
+app.use(passport.session());
 passport.use(new LocalStrategy(
     async (username, password, done) => {
         //find the user
@@ -64,6 +81,7 @@ env.addFilter("formatDate", (sqlDate: string) => {
     return moment(sqlDate).format("Do MMM YYYY")
 })
 
+
 app.get("/", (req, res) => {
     const model = {
         message: "World"
@@ -72,7 +90,12 @@ app.get("/", (req, res) => {
 
 });
 
+
 app.get("/book_list", async (req, res) => {
+    console.log(req.user)
+    if ( req.user === undefined ) {
+        return res.redirect("/login")
+    }
     const bookThing = await book_list()
     const model = {
         books: bookThing
@@ -98,6 +121,7 @@ app.get("/book/:name", async (request, response) => {
 })
 
 app.get("/books/remove", (request, response) => {
+   
     response.render('removalPage.html');
 })
 
